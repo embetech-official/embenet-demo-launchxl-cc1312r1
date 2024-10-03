@@ -1,0 +1,99 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/ti/boards/CC1312R1_LAUNCHXL" --rtos "nortos" --product "simplelink_cc13xx_cc26xx_sdk@6.40.00.13"
+ * @versions {"tool":"1.15.0+2826"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const CCFG     = scripting.addModule("/ti/devices/CCFG");
+const custom   = scripting.addModule("/ti/devices/radioconfig/custom");
+const rfdesign = scripting.addModule("/ti/devices/radioconfig/rfdesign");
+const AESECB   = scripting.addModule("/ti/drivers/AESECB", {}, false);
+const AESECB1  = AESECB.addInstance();
+const RF       = scripting.addModule("/ti/drivers/RF");
+const TRNG     = scripting.addModule("/ti/drivers/TRNG", {}, false);
+const TRNG1    = TRNG.addInstance();
+const Timer    = scripting.addModule("/ti/drivers/Timer", {}, false);
+const Timer1   = Timer.addInstance();
+const UART2    = scripting.addModule("/ti/drivers/UART2", {}, false);
+const UART21   = UART2.addInstance();
+const Button   = scripting.addModule("/ti/drivers/apps/Button", {}, false);
+const Button1  = Button.addInstance();
+const LED      = scripting.addModule("/ti/drivers/apps/LED", {}, false);
+const LED1     = LED.addInstance();
+const LED2     = LED.addInstance();
+const LED3     = LED.addInstance();
+const LED4     = LED.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+CCFG.enableBootloader        = true;
+CCFG.dioBootloaderBackdoor   = 13;
+CCFG.levelBootloaderBackdoor = "Active low";
+CCFG.ccfgTemplate.$name      = "ti_devices_CCFG_CCFGCC26XXTemplate0";
+
+custom.prop8                                              = ["custom868"];
+custom.radioConfigcustom868.txPower                       = "10";
+custom.radioConfigcustom868.$name                         = "RF_Custom_Setting";
+custom.radioConfigcustom868.carrierFrequency              = 868.0000;
+custom.radioConfigcustom868.preambleCount                 = "8 Bytes";
+custom.radioConfigcustom868.syncWordLength                = "16 Bits";
+custom.radioConfigcustom868.syncWord                      = 0x0000904E;
+custom.radioConfigcustom868.packetLengthRx                = 128;
+custom.radioConfigcustom868.deviation                     = 12.5;
+custom.radioConfigcustom868.whitening                     = "Dynamically IEEE 802.15.4g compatible whitener and 16/32-bit CRC";
+custom.radioConfigcustom868.codeExportConfig.$name        = "ti_devices_radioconfig_code_export_param0";
+custom.radioConfigcustom868.codeExportConfig.cmdList_prop = ["cmdPropRadioDivSetup","cmdTxTest"];
+
+AESECB1.interruptPriority = "6";
+AESECB1.$name             = "EMBENET_AES";
+
+RF.interruptPriority         = "5";
+RF.softwareInterruptPriority = "1";
+
+TRNG1.$name = "EMBENET_TRNG";
+
+Timer1.$name                   = "EMBENET_TIMER";
+Timer1.useGPTimer              = true;
+Timer1.interruptPriority       = "6";
+Timer1.timerInstance.$name     = "CONFIG_GPTIMER_0";
+Timer1.timerInstance.timerType = "32 Bits";
+
+UART21.$name              = "EMBENET_UART";
+UART21.txRingBufferSize   = 512;
+UART21.rxRingBufferSize   = 512;
+UART21.$hardware          = system.deviceData.board.components.XDS110UART;
+UART21.uart.txPin.$assign = "boosterpack.4";
+
+Button1.$name          = "MQTTSN_BUTTON_0";
+Button1.polarity       = "Active High";
+Button1.button.$assign = "boosterpack.18";
+Button1.gpioPin.pull   = "Pull Up";
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to LaunchPad SPI Bus Chip Select on the CC1312R1 LaunchPad\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", Button1, "button");
+
+LED1.$hardware = system.deviceData.board.components.LED_GREEN;
+LED1.$name     = "CONFIG_LED_2";
+
+LED2.$hardware      = system.deviceData.board.components.LED_RED;
+LED2.$name          = "CONFIG_LED_3";
+LED2.ledPin.$assign = "boosterpack.39";
+
+LED3.$name          = "CONFIG_LED_0";
+LED3.ledPin.$assign = "boosterpack.23";
+
+LED4.$name          = "CONFIG_LED_1";
+LED4.ledPin.$assign = "boosterpack.25";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+Timer1.timerInstance.timer.$suggestSolution = "GPTM1";
+UART21.uart.$suggestSolution                = "UART0";
+UART21.uart.rxPin.$suggestSolution          = "boosterpack.3";
+LED1.ledPin.$suggestSolution                = "boosterpack.40";
