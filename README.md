@@ -1,4 +1,4 @@
-# embeNET Demo for NUCLEO-WL55JC board
+# embeNET Demo for LAUNCHXL-CC1312R1 board
 
 ## What's inside ?
 
@@ -24,7 +24,7 @@ The demo is limited to 10 nodes only (including root node).
 - One [NUCLEO-WL55JC](https://www.st.com/en/evaluation-tools/nucleo-wl55jc.html) board connected to the PC (via USB cable) that will act as the root of the network
 - At least one more (and up to 9) [LAUNCHXL-CC1312R1](https://www.ti.com/tool/LAUNCHXL-CC1312R1) boards that will act as the network nodes
 - Code Composer Studio, available for download from [the official Texas Instrumets site](https://www.ti.com/tool/CCSTUDIO)
-- [embeNET demo package for CC1312](https://github.com/embetech-official/embenet-demo-launchxl-cc1312r1/releases)
+- [embeNET demo package for LAUNCHXL-CC1312R1](https://github.com/embetech-official/embenet-demo-launchxl-cc1312r1/releases)
 
 Optionally, to play with the MQTT-SN demo service you'll need:
 - MQTT For Small Things (SN) written in Java, available for download from [github](https://github.com/simon622/mqtt-sn)
